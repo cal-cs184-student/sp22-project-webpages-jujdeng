@@ -1,64 +1,119 @@
 <html>
 	<head>
+		<style>
+		  body {
+			padding: 100px;
+			width: 1000px;
+			margin: auto;
+			text-align: left;
+			font-weight: 300;
+			font-family: 'Open Sans', sans-serif;
+			color: #121212;
+		  }
+		  h1, h2, h3, h4 {
+			font-family: 'Source Sans Pro', sans-serif;
+		  }
+		</style>
+		<title>CS 184 Rasterizer</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
 	</head>
 	<body>
-		<h1>Project 1</h1>
+		<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2022</h1>
+		<h1 align="middle">Project 1: Rasterizer</h1>
+		<h2 align="middle">Julia Deng, Harmony He</h2>
+
+		<h2>Overview</h2>
+		<p>
+			For each of the parts, we first thought about what we were given and what the desired result should look like. For example, for the supersampling, we knew that we were given the triangle points and we needed to have the triangles appear more blurred at the corners and edges when increasing the super sample rates. We also thought about the steps that we needed to take, using the techniques learned in class. So for supersampling, we knew we needed to average a section of pixels at a time, but in order to code it, we also needed to think about things like how we would store our samples and how we would iterate through them to average them. In addition, we thought about other factors, such as edge cases and bound checks.
+		</p>
+		<p>
+			Many of the problems we encountered were when we thought our code should work in theory, as we believed we had implemented the right steps, but the result did not look right somehow. There were many small mistakes that would have a big impact on whether or not the image produced would look correct, so it was tedious to figure it out. Also, we had trouble debugging as it was difficult to locate the errors. Since most errors could only be seen graphically, it was difficult to debug since we did not know what numerical values or data to track to see what was going wrong. When we had errors, the best we could do was think about it in terms of the theory and figure out which part of the code was incorrect theoretically. We also thought about edge cases a lot, since flooring and rounding was used commonly throughout the project.
+		</p>
+		<p>
+			We also encountered a lot of segfaults in many of the tasks, like Task 2, 5 and 6. When this happened, we looked through our code and tried to see where there could be a potential problem with indexing or memory allocation with arrays. This is also where we focused a lot on edge cases, as well as the bounding cases.
+		</p>
+		<p>
+
+		</p>
+		<br><br>
 
 		<h2>Task 1</h2>
+		<h3>Drawing Single-Color Triangles</h3>
 		<p>
-			Walk through how you rasterize triangles in your own words.
-			First, we found the minimum and maximum x and y coordinates of all the triangle points. We then made sure they were in bounds. Also, we created a helper method to return the value of the point-in-line test. To check each pixel, we used a double for loop for each point in the bounding box, and did the point-in-triangle tests on them. We checked 2 sets of 3 point in line tests, to check for each winding direction.
-			Explain how your algorithm is no worse than one that checks each sample within the bounding box of the triangle.
-			The bounding box is determined by the min/max of the x and y coordinates, so we found those : p and only looped over the points in the box.
-			Show a png screenshot of basic/test4.svg with the default viewing parameters and with the pixel inspector centered on an interesting part of the scene.
-			
-			Extra credit: Explain any special optimizations you did beyond simple bounding box triangle rasterization, with a timing comparison table (we suggest using the c++ clock() function around the svg.draw() command in DrawRend::redraw() to compare millisecond timings with your various optimizations off and on).
+			To rasterize triangles we first found the minimum and maximum x and y coordinates of all the triangle vertices. We then made sure they were in bounds. Also, we created a helper method to return the value of the point-in-line test. To check each pixel, we used a double for loop for each point in the bounding box, and ran the point-in-triangle tests on them. We checked 2 sets of 3 point-in-line tests to check for each winding direction (counterclockwise and clockwise).
+			The bounding box is determined by the min/max of the x and y coordinates. We only looped over the points in the box, so our algorithm is no worse than one that checks each sample within the bounding box of the triangle.
+		</p>
+		<p>
+			Screenshot of basic/test4.svg with the default viewing parameters and with the pixel inspector centered on an interesting part of the scene:
 		</p>
 		<img src="src/task1.png" width="300">
+		<br><br>
 
 		<h2>Task 2</h2>
+		<h3>Antialiasing by Supersampling</h3>
 		<p>
-			Walk through your supersampling algorithm and data structures. Why is supersampling useful? What modifications did you make to the rasterization pipeline in the process? Explain how you used supersampling to antialias your triangles.
-			Show png screenshots of basic/test4.svg with the default viewing parameters and sample rates 1, 4, and 16 to compare them side-by-side. Position the pixel inspector over an area that showcases the effect dramatically; for example, a very skinny triangle corner. Explain why these results are observed.
-			Extra credit: If you implemented alternative antialiasing methods, describe them and include comparison pictures demonstrating the difference between your method and grid-based supersampling.
+			Supersampling is used for antialiasing, such as removing jaggies and Moire patterns caused by low resolution. It does this by sampling at a higher resolution, then averaging down to the desired amount of pixels.
+			First, we scaled up our bounding box values by the square root of the sample rate. Then we iterated through each point in the higher resolution bounding box and checked the point in line triangle tests using triangle points with the increased resolution and added the rasterized points into our sample buffer.
+			Finally, after rasterizing all the SVG elements, we iterated through the pixels in the original resolution, and averaged the corresponding sample_rate-sized square in our sample buffer.
+		</p>
+		<p>
+			Screenshots of basic/test4.svg with the default viewing parameters aand sample rates 1, 4, and 16:
 		</p>
 		<img src="src/task2_1.png" width="300">
 		<img src="src/task2_2.png" width="300">
 		<img src="src/task2_3.png" width="300">
+		<p> 
+			For sample rate = 1, there is no supersampling, and for very long and narrow triangle corners, some of the triangle goes through the center of the pixel, while some other parts of the triangle tip are within the pixel, but miss the center, so the pixel does not get filled. Thus, this can create a gap. Another thing that happens at rate = 1 is jaggies, since the pixels are all squares so angled shapes will look jagged instead of like a smooth line. 
+			When the sample rate increases, the triangle is being sampled at a higher rate, so it is more likely for at least one of the samples to catch a part of the skinny corner, and then when it averages it, it fills up the pixel with a lighter value rather than no color at all. Thus, it appears as a smoother transition as the triangle corner becomes thinner.
+		</p>
+		<br><br>
 		
 		<h2>Task 3</h2>
+		<h3>Transforms</h3>
 		<p>
-			Create an updated version of svg/transforms/robot.svg with cubeman doing something more interesting, like waving or running. Feel free to change his colors or proportions to suit your creativity. Save your svg file as my_robot.svg in your docs/ directory and show a png screenshot of your rendered drawing in your write-up. Explain what you were trying to do with cubeman in words.
+			Cubeman is now a ballerina robot. We made his arms in an oval-like shape and his right leg is kicked up behind him. We rotated his head and torso and his straight left leg, to show that he is leaping forward into this dance position. 
 		</p>
+		<img src="src/my_robot.png" width="300">
+		<br><br>
 
 		<h2>Task 4</h2>
+		<h3>Barycentric coordinates</h3>
 		<p>
-			Explain barycentric coordinates in your own words and use an image to aid you in your explanation. One idea is to use a svg file that plots a single triangle with one red, one green, and one blue vertex, which should produce a smoothly blended color triangle.
-			Show a png screenshot of svg/basic/test7.svg with default viewing parameters and sample rate 1. If you make any additional images with color gradients, include them.
+			Barycentric are used to interpolate across a triangle, by calculating a weighted sum of the values at the three vertices. If a point in the triangle is closer to a vertex than the other two, it will be more influenced by it, so it will have a higher weight for that vertex’s value. For example, the lower right part of the triangle above is very close to red, since it is near the red vertex, while in the middle, it looks brown, or a mixture of all the colors. 
 		</p>
-		<img src="src/task4.png" width="300">
+		<p>
+			Explanation of barycentric coordinates and screenshot of svg/basic/test7.svg with default viewing parameters and sample rate 1:
+		</p>
+		<img src="src/task4_1.png" width="300">
+		<img src="src/task4_2.png" width="300">
+		<br><br>
 
 		<h2>Task 5</h2>
+		<h3>"Pixel sampling" for texture mapping</h3>
 		<p>
-			Explain pixel sampling in your own words and describe how you implemented it to perform texture mapping. Briefly discuss the two different pixel sampling methods, nearest and bilinear.
-			Check out the svg files in the svg/texmap/ directory. Use the pixel inspector to find a good example of where bilinear sampling clearly defeats nearest sampling. Show and compare four png screenshots using nearest sampling at 1 sample per pixel, nearest sampling at 16 samples per pixel, bilinear sampling at 1 sample per pixel, and bilinear sampling at 16 samples per pixel.
-			Comment on the relative differences. Discuss when there will be a large difference between the two methods and why.
+			Nearest sampling is where each pixel takes on the value of the closest pixel, so the pixels will be more apparent since the values are not continuous as they are taken from discrete locations.
+			Bilinear sampling is where you take a weighted average of the 4 nearest sample locations, and interpolate them based on their fractional offsets to the desired texture value location. It will appear more smooth and blurred, since the interpolation is continuous.
 		</p>
+		<p>
+			screenshots using nearest sampling at 1 sample per pixel bilinear sampling at 1 sample per pixel:
+			(we ended up not being able to get 16 samples per pixel due to segfaults)
+		</p>
+		<img src="src/task5_1.png" width="300">
+		<img src="src/task5_2.png" width="300">
+		<br><br>
 
 		<h2>Task 6</h2>
+		<h3>"Level sampling" with mipmaps for texture mapping</h3>
 		<p>
-			Explain level sampling in your own words and describe how you implemented it for texture mapping.
-			You can now adjust your sampling technique by selecting pixel sampling, level sampling, or the number of samples per pixel. Describe the tradeoffs between speed, memory usage, and antialiasing power between the three various techniques.
-			Using a png file you find yourself, show us four versions of the image, using the combinations of L_ZERO and P_NEAREST, L_ZERO and P_LINEAR, L_NEAREST and P_NEAREST, as well as L_NEAREST and P_LINEAR.
-			To use your own png, make a copy of one of the existing svg files in svg/texmap/ (or create your own modelled after one of the provided svg files). Then, near the top of the file, change the texture filename to point to your own png. From there, you can run ./draw and pass in that svg file to render it and then save a screenshot of your results.
-			Note: Choose a png that showcases the different sampling effects well. You may also want to zoom in/out, use the pixel inspector, etc. to demonstrate the differences.
-			Extra credit: If you implemented any extra filtering methods, describe them and show comparisons between your results with the other above methods.
+			For level sampling, we recursively average 4 squares together, and the squares increase size so that the resolution increases by powers of 2.
+			We attempted to implement this for texture mapping by calculating the level based on the differential vectors and scaling them. Unfortunately we ran into issues with scaling the squares.
+			Pixel sampling is the fastest and takes the least memory because we only look at one sample location per pixel, whereas we average multiple sample locations for the other techniques; however, it does not have as much antialiasing power because it's more discrete and not smoothing it out between adjacent areas.
 		</p>
-
-		<p>
-			Extra Credit
-			Save your best svg file as competition.svg in your docs/ directory, and show us a 800x800 png screenshot of it in your write-up!
-			Explain how you did it. If you wrote a script to generate procedural svg files, include it in your submission in the src/ directory and briefly explain how it works.
-		</p>
+		<img src="src/task6_1.png" width="300">
+		<img src="src/task6_2.png" width="300">
+		<img src="src/task6_3.png" width="300">
+		<img src="src/task6_4.png" width="300">
+		<br><br>
 	</body>
 </html>
