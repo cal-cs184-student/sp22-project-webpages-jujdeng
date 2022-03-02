@@ -28,9 +28,12 @@
 		</p>
 
 		<p>
+			In this project, our main approach was to have a  thorough understanding of the algorithms for each task, so that we could just translate our conceptual understanding into code. When implementing, we carefully thought about each step of the algorithms and also made sure we were updating everything, such as pointers, positions, booleans like isNew, etc. Most of the parts were solved smoothly, but we were a bit stuck for Task 6, as the vertices appeared to be in the wrong positions. We solved this problem by commenting out certain parts of the code, like flipping, updating positions, splitting, to see where exactly the error lied. Then, we carefully thought about whether we were updating all the pointers and values that we needed to update.
+
 		</p>
 
 		<p>
+			Overall, the assignment was very interesting, especially when we were able to see the final results. Our favorite part was seeing the loop subdivision, because it was very satisfying to see it working properly. We learned about many algorithms, like de Casteljau, loop subdivision, etc., and how to implement them. We also learned the importance of writing neat and organized code and to think thoroughly about what needs to be updated, since missing a single update of a value can completely change the appearance of the mesh.
 		</p>
 
 		<p>
@@ -40,6 +43,9 @@
 		<h2>Part 1</h2>
 		<h3>Bezier Curves with 1D de Casteljau Subdivision</h3>
 		<p>
+			de Casteljau's algorithm uses linear interpolation to recursively insert points on each edge. The intermediate points connect into intermediate edges and we continue until reaching one point. This then defines the Bezier curve.
+			We implemented one step of the algorithm, iterating through the given n points and calculating n - 1 intermediate points by lerping each pair of consecutive control points.
+
 		</p>
 		<p>
 			Screenshots of our own Bezier curve at each level of evaluation, the final curve, and a slightly different curve with shifted control points and modified t:
@@ -85,6 +91,10 @@
 		<h2>Part 2</h2>
 		<h3>Bezier Surfaces with Separable 1D de Casteljau</h3>
 		<p>
+			de Casteljau's algorithm extends to Bezier surfaces because we evaluate multiple Beizer curves in u that then define one moving curve on the surface.
+			For each row of control points, parameterized by u, we calculated the interpolated 3d point using de Casteljau’s.
+			Then, we took this vector of points and evaluated them into the final point using de Casteljau’s, parameterized by v.
+
 		</p>
 		<p>
 			Screenshot of bez/teapot.bez:
@@ -95,6 +105,7 @@
 		<h2>Part 3</h2>
 		<h3>Area-Weighted Vertex Normals</h3>
 		<p>
+			For each vertex, we calculated the area-weighted vertex normal by iterating through the neighboring (triangle)faces of the vertex. In this iteration, we summed together all the normals of each face, which were also normalized by their area. Finally, we took this sum of face normals and normalized it, resulting in the area-weighted vertex normal.
 		</p>
 		<p>
 			Screenshots of dae/teapot.dae with and without vector normals:
@@ -106,6 +117,9 @@
 		<h2>Part 4</h2>
 		<h3>Edge Flip</h3>
 		<p>
+			We listed out every element in the mesh, setting the HalfedgeIters, VertexIters, EdgeIters, and FaceIters based on the passed in EdgeIter. We then set the corresponding halfedge pointers for every VertexIter, EdgeIter, and FaceIter. We then used setNeighbors for every halfedge besides the outer 4 to reflect the changes of the flip. We followed numberings based off of a diagram to ensure all the pointers were correctly assigned.
+			We also used isBoundary() to make sure we didn’t flip boundary edges.
+
 		</p>
 		<p>
 			Screenshots of dae/teapot.dae before and after some edge flips:
@@ -117,6 +131,9 @@
 		<h2>Part 5</h2>
 		<h3>Edge Split</h3>
 		<p>
+			We listed out every element in the mesh, setting the HalfedgeIters, VertexIters, EdgeIters, and FaceIters based on the passed in EdgeIter. We also created new mesh elements with newHalfedge(), newVertex(), newEdge(), and newFace(). We set the position of the new vertex to be the midpoint of the original edge. We then set the corresponding halfedge pointers for every VertexIter, EdgeIter, and FaceIter. We then used setNeighbors for every halfedge besides the outer 4 to reflect the changes of the split. We followed numberings based off of a diagram to ensure all the pointers were correctly assigned.
+			We also used isBoundary() to avoid splitting boundary edges.
+
 		</p>
 		<p>
 			Screenshots of dae/bean.dae before and after some edge splits:
@@ -135,14 +152,34 @@
 		<p>
 		</p>
 		<p>
+			We implemented the subdivision by first iterating through all the vertices and then calculating the new position of each vertex of the original mesh. This was done by calculating a weighted average on the positions of the neighboring vertices.
+			Next, we calculated the new vertex positions associated with the original edges, using the new vertex weighted sum formula.
+			Then, we split every edge of the original mesh and we also set the isNew for the split edges. Then, in order to make the the 4-1 subdivision, we used our flipEdge method from Part 4 to flip every split edge connecting a new and old vertex. Finally, we updated all of the vertex positions to their new positions.
+			We used a debugging trick when our vertices seemed to be in the wrong positions. First, we commented out the vertex position updating code to see if the subdivision was correct without the position updates. It was still not correct, so then we tried commenting out the code for flipping the split edges. It was correct before that step, so then we discovered that the problem was with the flipping.
+			The cube seems to be asymmetrical, because each original face is two triangles making up a square, or a square with a diagonal. Depending on which vertices the diagonal is between, it is possible for some vertices to have different degrees. The different degrees in the vertex make the weight calculations vary, so the positions will be asymmetric.
+			Since there are 12 edges of the cube and each edge neighbors 2 vertices, and there are 6 diagonals and each neighbors 2 vertices, the total sum of all vertex degrees is 12 * 2 + 6 * 2 = 36. Thus we can’t make it completely symmetrical for all 8 vertices, but we can try making it a little better. The default is some vertices have 3, 4, 5, or 6 degrees, so very asymmetric. If we flip the edges so the vertices only can have either 4 or 5 degrees, it will be more symmetrical.
+
 		</p>
 		<p>
 			Screenshots of of subdivided teapot, cube, icosahedron, torus, respectively
 		</p>
-		<img src="images/task6_teapot.png" width="400">
-		<img src="images/task6_cube.png" width="400">
-		<img src="images/task6_icosahedron.png" width="400">
-		<img src="images/task6_torus.png" width="400">
+		<img src="images/task6_teapot.PNG" width="400">
+		<img src="images/task6_cube.PNG" width="400">
+		<img src="images/task6_icosahedron.PNG" width="400">
+		<img src="images/task6_torus.PNG" width="400">
+
+		<p>
+			Progression of cube subdivision
+		</p>
+		<img src="images/cube1.PNG" width="400">
+		<img src="images/cube2.PNG" width="400">
+		<img src="images/cube3.PNG" width="400">
+		<img src="images/cube4.PNG" width="400">
+
+		<p>
+			More symmetrical subdivided cube, achieved through preprocessing
+		</p>
+		<img src="images/preprocessed.PNG" width="400">
 		<!-- <img src="images/task6_1.png" width="300">
 	<img src="images/task6_2.png" width="300">
 	<img src="images/task6_3.png" width="300">
