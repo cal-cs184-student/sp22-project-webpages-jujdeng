@@ -1,7 +1,134 @@
 <html>
 	<head>
+		<style>
+		  body {
+			padding: 100px;
+			width: 1000px;
+			margin: auto;
+			text-align: left;
+			font-weight: 300;
+			font-family: 'Open Sans', sans-serif;
+			color: #121212;
+		  }
+		  h1, h2, h3, h4 {
+			font-family: 'Source Sans Pro', sans-serif;
+		  }
+		</style>
+		<title>CS 184 Rasterizer</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
 	</head>
 	<body>
-		Project 3-2 here
+		<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2022</h1>
+		<h1 align="middle">Project 3-2: Pathtracer</h1>
+		<h2 align="middle">Julia Deng, Harmony He</h2>
+
+		<h2>Overview</h2>
+		<p>
+			Overall, this project went smoothly.
+		</p>
+		<p>
+			In this project, we approached the parts and tasks by following the spec, lecture slides, and piazza threads. When we ran into bugs, we tried commenting out code to locate where the issue was. We looked through piazza and attended project parties to get help.
+		</p>
+		<p>
+			We learned about how materials like mirror and glass reflect and/or refract light differently. Implementing glass was particularly interesting in using Schlick's approximation to model either reflection or refraction of light.
+		</p>
+
+		<br><br>
+
+		<h2>Part 1</h2>
+		<h3>Mirror and Glass Materials</h3>
+		<p>
+			We implemented reflect and refract functions, which were then called in the sample_f functions of the mirror and glass classes.
+		</p>
+		<p>
+			Images of scene CBspheres.dae rendered with 64 samples per pixel, 4 samples per light, and max_ray_depth set to 0, 1, 2, 3, 4, 5, and 100:
+		</p>
+		<div align="middle">
+			<table style="width=100%">
+				<tr>
+					<td>
+						<img src="images/CBspheres_0.png" align="middle" width="300" />
+					</td>
+					<td>
+						<img src="images/CBspheres_1.png" align="middle" width="300" />
+					</td>
+					<td>
+						<img src="images/CBspheres_2.png" align="middle" width="300" />
+					</td>
+				</tr>
+				<br>
+				<tr>
+					<td>
+						<img src="images/CBspheres_3.png" align="middle" width="300" />
+					</td>
+					<td>
+						<img src="images/CBspheres_4.png" align="middle" width="300" />
+					</td>
+					<td>
+						<img src="images/CBspheres_5.png" align="middle" width="300" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<img src="images/CBspheres_100.png" align="middle" width="300" />
+					</td>
+				</tr>
+			</table>
+		</div>
+		<p>
+			Many multibounce effects appear in each image, different for each bounce number.
+			With maximum ray depth 0, the spheres don't appear.
+			For 1 bounce, light bounces off the spheres so we see them but without any mirror or glass effect. We do see the reflection of the ceiling light.
+			For 2 bounces, the back sphere shows the reflection of the scene, but it still has a lot of black. The front sphere shows a very dark reflection of the scene, not yet refracting the light.
+			For 3 bounces, the back sphere's reflection shows less black. The front sphere is no longer dark, but still doesn't have much of a clear glassy look with glare.
+			For 4 bounces, the shadows in the back sphere's reflection are lighter. The front sphere looks more glassy. We also see the white dot of reflection on the blue wall.
+			For 5 bounces, the shadows have a bit more color.
+			For 100 bounces, the front sphere shows the most glare.
+		</p>
+		<br><br>
+
+		<h2>Part 2</h2>
+		<h3>Bounding Volume Hierarchy</h3>
+		<p>
+			The BVH construction was done recursively, by starting at the root and recursing on the left and right children of each node. We checked the base case, whether the node was a leaf node, by seeing if its distance from start to end was less than max_leaf_size. If it was a leaf, we simply added all the primitives into a bbox and created a new node from that bbox. For non-leaf nodes, we had to determine how to split into left and right, by finding the split centroid from the mean of all the bboxes centroids, and then finding the longest axis. We then split on this longest axis of the split centroid. In addition, we performed checks to make sure that the split was decreasing the nubmer of primitives in each node. 
+		</p>
+		<p>
+			Our heuristic for choosing the splitting point was the average of centroids along the axis with the largest extent.
+		</p>
+		<p>
+			Rendering time anaylsis:
+		</p>
+		<p>
+		 	With BVH acceleration, rendering cow.png took 0.6711s. Without BVH, it took 39.12s. Thus, with BVH, it is much faster, which makes sense, since with BVH, we can first check if the ray intersects the bounding box and stop early if it doesn't intersect the bbox. Otherwise, it would need to do complex ray-primtive intersection calculations for every sample, which is very expensive.
+		</p>
+		<p>
+			Images with BVH acceleration:
+		</p>
+		<img src="images/part2_1.png" width="300">
+		<img src="images/part2_2.png" width="300">
+		<img src="images/part2_3.png" width="300">
+		<br><br>
+
+		<h2>Part 4</h2>
+		<h3>Global Illumination</h3>
+		<!-- <p>
+			indirect lighting
+		</p>
+		<p>
+			compare
+		</p>
+		<p>
+			Images:
+		</p> -->
+		<!-- <img src="images/part4_1.png" width="400"> -->
+		<br><br>
+
+		<h2>Collaboration</h2>
+		<p>
+			As partners, we each focused more on one task. We did collaborate by using CLion's Code With Me feature to pair program.
+		</p>
+
+		<p>https://cal-cs184-student.github.io/sp22-project-webpages-jumony/proj3-2/index.html</p>
 	</body>
 </html>
