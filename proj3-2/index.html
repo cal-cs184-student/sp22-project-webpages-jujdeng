@@ -32,6 +32,7 @@
 		</p>
 		<p>
 			We learned about how materials like mirror and glass reflect and/or refract light differently. Implementing glass was particularly interesting in using Schlick's approximation to model either reflection or refraction of light.
+			We also learned about what factors affect the material properties.
 		</p>
 
 		<br><br>
@@ -89,44 +90,55 @@
 		<br><br>
 
 		<h2>Part 2</h2>
-		<h3>Bounding Volume Hierarchy</h3>
+		<h3>Microfacet Material</h3>
 		<p>
-			The BVH construction was done recursively, by starting at the root and recursing on the left and right children of each node. We checked the base case, whether the node was a leaf node, by seeing if its distance from start to end was less than max_leaf_size. If it was a leaf, we simply added all the primitives into a bbox and created a new node from that bbox. For non-leaf nodes, we had to determine how to split into left and right, by finding the split centroid from the mean of all the bboxes centroids, and then finding the longest axis. We then split on this longest axis of the split centroid. In addition, we performed checks to make sure that the split was decreasing the nubmer of primitives in each node. 
+			CBdragon_microfacet_au.dae rendered with 256 samples per pixel, 4 samples per light, 7 bounces, and α set to 0.005, 0.05, 0.25 and 0.5:
 		</p>
 		<p>
-			Our heuristic for choosing the splitting point was the average of centroids along the axis with the largest extent.
+			As α increases, the dragon becomes less glossy and more diffuse. The dragon has darker regions and more white dots with a smaller α.
 		</p>
+		<div align="middle">
+			<table style="width=100%">
+				<tr>
+					<td>
+						<img src="images/CBdragon_microfacet0_005.png" align="middle" width="300" />
+					</td>
+					<td>
+						<img src="images/CBdragon_microfacet0_05.png" align="middle" width="300" />
+					</td>
+				</tr>
+				<br>
+				<tr>
+					<td>
+						<img src="images/CBdragon_microfacet0_25.png" align="middle" width="300" />
+					</td>
+					<td>
+						<img src="images/CBdragon_microfacet0_5.png" align="middle" width="300" />
+					</td>
+				</tr>
+			</table>
+		</div>
+		<p>
+			CBbunny_microfacet_cu.dae rendered with cosine hemisphere sampling (default) vs importance sampling:
+		</p>
+		<div align="middle">
+			<img src="images/CBbunny_microfacet_cu_cos.png" width="300">
+			<img src="images/CBbunny_microfacet_cu_importance.png" width="300">
+		</div>
 		<p>
 			Rendering time anaylsis:
 		</p>
 		<p>
-		 	With BVH acceleration, rendering cow.png took 0.6711s. Without BVH, it took 39.12s. Thus, with BVH, it is much faster, which makes sense, since with BVH, we can first check if the ray intersects the bounding box and stop early if it doesn't intersect the bbox. Otherwise, it would need to do complex ray-primtive intersection calculations for every sample, which is very expensive.
+			CBdragon_microfacet_au.dae rendered with eta and k values that correspond to Pb lead.
 		</p>
-		<p>
-			Images with BVH acceleration:
-		</p>
-		<img src="images/part2_1.png" width="300">
-		<img src="images/part2_2.png" width="300">
-		<img src="images/part2_3.png" width="300">
-		<br><br>
-
-		<h2>Part 4</h2>
-		<h3>Global Illumination</h3>
-		<!-- <p>
-			indirect lighting
-		</p>
-		<p>
-			compare
-		</p>
-		<p>
-			Images:
-		</p> -->
-		<!-- <img src="images/part4_1.png" width="400"> -->
+		<div align="middle">
+			<img src="images/CBdragon_microfacet_pb.png" width="300">
+		</div>
 		<br><br>
 
 		<h2>Collaboration</h2>
 		<p>
-			As partners, we each focused more on one task. We did collaborate by using CLion's Code With Me feature to pair program.
+			As partners, we each focused more on one task but helped each other. We attended project parties and communicated about what questions we would ask the TAs. We also collaborated by using CLion's Code With Me feature to pair program.
 		</p>
 
 		<p>https://cal-cs184-student.github.io/sp22-project-webpages-jumony/proj3-2/index.html</p>
