@@ -25,14 +25,14 @@
 
 		<h2>Overview</h2>
 		<p>
-			Overall, this project went smoothly.
+			Overall, this project went smoothly, and it was very interesting to see all the different renderings of different materials and apperances.
 		</p>
 		<p>
-			In this project, we approached the parts and tasks by following the spec, lecture slides, and piazza threads. When we ran into bugs, we tried commenting out code to locate where the issue was. We looked through piazza and attended project parties to get help.
+			In this project, we approached the parts and tasks by following the spec, lecture slides, and piazza threads. We found that the spec for this project was very clear, and gave a detailed breakdown of all the equations, so it was very helpful. When we ran into bugs, we tried commenting out code to locate where the issue was. We also made sure to reread the implementation notes, to make sure we were not forgetting any important steps, such as error checking. We looked through piazza and attended project parties to get help.
 		</p>
 		<p>
 			We learned about how materials like mirror and glass reflect and/or refract light differently. Implementing glass was particularly interesting in using Schlick's approximation to model either reflection or refraction of light.
-			We also learned about what factors affect the material properties.
+			We also learned about what factors affect the material properties. We also learned how to implement lighting for Microfacet materials, and it was very cool to see how slight changes in even a single factor(like alpha) can make the material of an object look completely different. We also learned that importance sampling is an very helpful method in reducing noise. 
 		</p>
 
 		<br><br>
@@ -92,10 +92,13 @@
 		<h2>Part 2</h2>
 		<h3>Microfacet Material</h3>
 		<p>
+			We implemented microfacet materials, by calculating the Microfacet BRDF, which used our Normal Distribution Function and Fresnel term. For the Fresnel term, we had to calculate the air-conductor Fresnel term and for the NDF, we utilized Beckmann distribution. Finally, we sampled the BRDF using importance sampling. 
+		</p>
+		<p>
 			CBdragon_microfacet_au.dae rendered with 256 samples per pixel, 4 samples per light, 7 bounces, and α set to 0.005, 0.05, 0.25 and 0.5:
 		</p>
 		<p>
-			As α increases, the dragon becomes less glossy and more diffuse. The dragon has darker regions and more white dots with a smaller α.
+			The lower values of α create a glossy appearance, as there are large chunks of sharp color, and also a lot of contrast, as the dragon has darker regions and more white dots with a smaller α. As α increases, the dragon becomes less glossy and more diffuse. The colors are less in distinctive groups and smoothly blend with each other, creating a more matte appearance with soft highlights. There is also less contrast and range of color.
 		</p>
 		<div align="middle">
 			<table style="width=100%">
@@ -126,7 +129,7 @@
 			<img src="images/CBbunny_microfacet_cu_importance.png" width="300">
 		</div>
 		<p>
-			Rendering time anaylsis:
+			The image rendered with cosine hemisphere sampling has significantly more noise, including the light colored dots on the background, as well noise over the bunny's body, especially with much more black dots along the edges. The importance sampled image still has a little bit of noise on the background, but much less, and the bunny looks much smoother.
 		</p>
 		<p>
 			CBdragon_microfacet_au.dae rendered with eta and k values that correspond to Pb lead.
