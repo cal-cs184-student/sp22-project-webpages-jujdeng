@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<style>
+		  body {
+			padding: 100px;
+			width: 1000px;
+			margin: auto;
+			text-align: left;
+			font-weight: 300;
+			font-family: 'Open Sans', sans-serif;
+			color: #121212;
+		  }
+		  h1, h2, h3, h4 {
+			font-family: 'Source Sans Pro', sans-serif;
+		  }
+		</style>
+		<title>CS 184 Final Project</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+	</head>
+	<body>
+		<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2022</h1>
+		<h1 align="middle">Final Project: Non-Photorealistic Rendering</h1>
+		<h2 align="middle">Julia Deng, Harmony He, Jessica Liang, Christina Shao</h2>
+
+		<h2>Summary</h2>
+		<p>
+			Our project will be on NPR, non-photorealistic rendering. Rather than rendering images and scenes to reflect things realistically like a photograph, we are exploring the artistic side of graphics.
+        </p>
+		<br><br>
+
+		<h2>Problem Description</h2>
+        <p>
+            The problem we want to solve is rendering images and scenes in different artistic styles that are not necessarily realistic. We all appreciate art and enjoy graphic design. We’ve used effects in Adobe Illustrator that can be applied to images, prompting our idea for this project. We think it’s important to express creativity and explore different styles, so this project can be a way to portray objects in more abstract ways such that they are still recognizable.
+        </p>
+		<p>
+            This problem is challenging because we entirely cannot rely on real-world behavior. We’ll solve this by defining our own behavior for what we want to render, such as the color and thickness of pencil scribbles, what colors to use to posterize a photo, and how much the watercolor should bleed.
+        </p>
+		<br><br>
+
+		<h2>Goals and Deliverables</h2>
+		<p>
+            We plan on accomplishing at least the posterization and pencil effects. Depending on the results of our research, the input files will either be 3D .dae files or 2D .jpg/.png images. The output will most likely be an image file.
+        </p>
+        <p>
+            Posterization is where we represent a subject in only several colors instead of the full spectrum, with clear divisions between each color region. In Adobe Illustrator, this is equivalent to image tracing with a small number of colors. One of the main tasks to implement posterization is picking the main colors used. We need to select colors that are similar to those used most in the actual scene but are also different enough from each other so that we can show contrast. Once the small set of colors are selected, we will create an algorithm to assign a color for each point of the scene. A primitive approach could be to assign the color closest to the original value, but this could result in uneven boundaries, meaning we would need to implement some sort of edge detection to achieve smooth edges between color regions.
+        </p>
+        <p>
+            The Pencil Effect makes our subject appear as if it were a sketched, pencil drawing. In order to implement the pencil effect, we must implement techniques for silhouette edge detection and interior shading.
+        </p>
+        <p>
+            The quality of our results will be measured based on how visually similar the output simulates the planned effect. Since the goal is non-photorealistic rendering, this metric is fairly lenient and emphasizes aesthetics over accuracy.
+        </p>
+        <p>
+            We hope to also accomplish the watercolor effect. This will render a scene to look like watercolor artwork where the color bleeds from the outer edge inwards. The larger parts of the scene should be white to simulate paper, and we can select the main colors similar to posterization to apply the blending to.
+        </p>
+		<br><br>
+		
+		<h2>Schedule</h2>
+		<h3>Week 1</h3>
+		<ul>
+            <li>research</li>
+            <li>set up code to build off of</li>
+            <li>start working on posterization effect</li>
+        </ul>
+        <h3>Week 2</h3>
+		<ul>
+            <li>implement posterization effect</li>
+            <li>milestone deliverables</li>
+        </ul>
+        <h3>Week 3</h3>
+		<ul>
+            <li>implement pencil sketch effect</li>
+            <li>milestone deliverables</li>
+        </ul>
+        <h3>Week 4</h3>
+		<ul>
+            <li>final deliverables</li>
+            <li>implement watercolor effect if time allows</li>
+        </ul>
+		<br><br>
+
+		<h2>Resources</h2>
+		<p>
+            We may start with code similar to Project 4 Task 5 for building shaders.
+        </p>
+        <ul>
+            <a href="https://blendermarket.com/products/komikaze"><li>Shader Pack made for NPR Renders</li></a>
+            <a href="https://hpi.de/fileadmin/user_upload/hpi/navigation/10_forschung/30_publikationen/15_dissertationen/Diss_Nienhaus.pdf"><li>Article on non-photorealistic rendering techniques</li></a>
+            <a href="https://www.researchgate.net/figure/Example-of-an-NPR-generated-pencil-drawing-generated-with-the-method-from-Lake-in-the_fig27_228477901"><li>Example of an NPR generated pencil drawing</li></a>
+            <a href="https://artineering.io/publications/Art-Directed-Watercolor-Stylization-of-3D-Animations-in-Real-Time/"><li>Example of watercolor stylization</li></a>
+            <a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.70.3049&rep=rep1&type=pdf"><li>Pencil stroke rendering procedure</li></a>
+        </ul>
+		<br><br>
+	</body>
+</html>
