@@ -44,15 +44,15 @@
 		<table style="width=100%" , cellspacing="0">
 			<tr>
 				<td>
-					<img src="images/CBspheres_0.png" align="middle" width="300" />
+					<img src="images/p1_no_shear.png" align="middle" width="600" />
 				</td>
 				<td>
-					<img src="images/CBspheres_1.png" align="middle" width="300" />
-				</td>
-				<td>
-					<img src="images/CBspheres_2.png" align="middle" width="300" />
+					<img src="images/p1_only_shear.png" align="middle" width="600" />
 				</td>
 			</tr>
+			<td>
+				<img src="images/p1_all.png" align="middle" width="600" />
+			</td>
 		</table>
 	</div>
 	<p>
@@ -64,35 +64,85 @@
 	<h3>Simulation via Numerical Integration</h3>
 	<p>
 		Description of part
+	</p>
 	<p>
-		Describe the effects of changing the spring constant ks; how does the cloth behave from start to rest with a very low ks? A high ks?
-		What about for density?
-		What about for damping?
-		For each of the above, observe any noticeable differences in the cloth compared to the default parameters and show us some screenshots of those interesting differences and describe when they occur.
+		Varying ks: ks = 5, ks = 5000, ks = 50000
 	</p>
 	<div align="middle">
 		<table style="width=100%">
 			<tr>
 				<td>
-					<img src="images/CBdragon_microfacet0_005.png" align="middle" width="300" />
+					<img src="images/p2_ks5.png" align="middle" width="300" />
 				</td>
 				<td>
-					<img src="images/CBdragon_microfacet0_05.png" align="middle" width="300" />
-				</td>
-			</tr>
-			<br>
-			<tr>
-				<td>
-					<img src="images/CBdragon_microfacet0_25.png" align="middle" width="300" />
+					<img src="images/p2_final.png" align="middle" width="300" />
 				</td>
 				<td>
-					<img src="images/CBdragon_microfacet0_5.png" align="middle" width="300" />
+					<img src="images/p2_ks50000.png" align="middle" width="300" />
 				</td>
 			</tr>
 		</table>
 	</div>
 	<p>
-		Scene pinned4.json in final resting state
+		asdasdas
+	</p>
+
+	<p>
+		Varying density: density = 1, 15, 5000 g/cm^2
+	</p>
+	<div align="middle">
+		<table style="width=100%">
+			<tr>
+				<td>
+					<img src="images/p2_low_density.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/p2_final.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/p2_high_density.png" align="middle" width="300" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+		asdasdas
+	</p>
+
+	<p>
+		Varying damping: damping = 0, 0.2, 1.0 %
+	</p>
+	<div align="middle">
+		<table style="width=100%">
+			<tr>
+				<td>
+					<img src="images/p2_0_damping.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/p2_damp_low1.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/p2_damp_low2.png" align="middle" width="300" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="images/p2_final.png" align="middle" width="300" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="images/p2_damphigh.png" align="middle" width="300" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+		When damping is low, the cloth has a lot of micro movement, and at the end, it does not come to rest and instead makes fine ripples throughout. At high damping, the cloth falls slowly and comes to a stop without additional rippling.
+	</p>
+
+	<p>
+		Scene pinned2.json in final resting state
 	</p>
 	<div align="middle">
 		<img src="images/CBbunny_microfacet_cu_cos.png" width="300">
@@ -112,22 +162,27 @@
 		<table style="width=100%">
 			<tr>
 				<td>
-					<img src="images/CBdragon_microfacet0_005.png" align="middle" width="300" />
+					<img src="images/p3_500.png" align="middle" width="500" />
 				</td>
 				<td>
-					<img src="images/CBdragon_microfacet0_05.png" align="middle" width="300" />
+					<img src="images/p3_5000.png" align="middle" width="500" />
 				</td>
-				<td>
-					<img src="images/CBdragon_microfacet0_25.png" align="middle" width="300" />
-				</td>
+
 			</tr>
+			<td>
+				<img src="images/p3_50000.png" align="middle" width="500" />
+			</td>
 		</table>
 	</div>
+	<p>
+		The spring constant, ks, determines how stiff the spring is. Thus, higher values of ks make the spring stiffer, which is why for ks=50000, the cloth sticks out more and has fewer folds.
+		On the other hand, for ks=500, the cloth deforms closer to the shape of the sphere, and has more folds when it drapes down.
+	</p>
 	<p>
 		Shaded cloth from scene/sphere.json lying peacefully at rest on the plane
 	</p>
 	<div align="middle">
-		<img src="images/CBbunny_microfacet_cu_cos.png" width="300">
+		<img src="images/p3_final_sphere.png" width="600">
 	</div>
 
 	<br><br>
@@ -143,39 +198,108 @@
 		<table style="width=100%">
 			<tr>
 				<td>
-					<img src="images/CBdragon_microfacet0_005.png" align="middle" width="300" />
+					<img src="images/p4_11.png" align="middle" width="400" />
 				</td>
 				<td>
-					<img src="images/CBdragon_microfacet0_05.png" align="middle" width="300" />
+					<img src="images/p4_12.png" align="middle" width="400" />
 				</td>
 				<td>
-					<img src="images/CBdragon_microfacet0_25.png" align="middle" width="300" />
+					<img src="images/p4_13.png" align="middle" width="400" />
 				</td>
 			</tr>
+			<td>
+				<img src="images/p4_14.png" align="middle" width="400" />
+			</td>
+			<td>
+				<img src="images/p4_15.png" align="middle" width="400" />
+			</td>
 		</table>
 	</div>
+
 	<p>
-		Vary the density as well as ks and describe with words and screenshots how they affect the behavior of the cloth as it falls on itself.e
-	</p>
-	<p>
-		images description
+		From another angle
 	</p>
 	<div align="middle">
 		<table style="width=100%">
 			<tr>
 				<td>
-					<img src="images/CBdragon_microfacet0_005.png" align="middle" width="300" />
+					<img src="images/p4_21.png" align="middle" width="400" />
 				</td>
 				<td>
-					<img src="images/CBdragon_microfacet0_05.png" align="middle" width="300" />
+					<img src="images/p4_22.png" align="middle" width="400" />
 				</td>
 				<td>
-					<img src="images/CBdragon_microfacet0_25.png" align="middle" width="300" />
+					<img src="images/p4_23.png" align="middle" width="400" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="images/p4_24.png" align="middle" width="400" />
+				</td>
+				<td>
+					<img src="images/p4_25.png" align="middle" width="400" />
+				</td>
+				<td>
+					<img src="images/p4_26.png" align="middle" width="400" />
+				</td>
+			</tr>
+			<td>
+				<img src="images/p4_27.png" align="middle" width="400" />
+			</td>
+		</table>
+	</div>
+
+	<p>
+		Varying ks, density:
+	</p>
+	<p>
+		Cloth falling with ks = 500 (top), ks = 50000 (bottom)
+	</p>
+	<div align="middle">
+		<table style="width=100%">
+			<tr>
+				<td>
+					<img src="images/p4_ks50_1.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/p4_ks50_2.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/p4_ks50_2.png" align="middle" width="300" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="images/p4_ks50000_1.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/p4_ks50000_2.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/p4_ks50000_3.png" align="middle" width="300" />
 				</td>
 			</tr>
 		</table>
 	</div>
+	<p>
+		When ks is lower, the cloth has finer folds/wrinkles, since it is less stiff. On the other hand, for higher ks, the cloth is stiffer, so it maintains horizontal lines of folds as it is falling. In addition, the cloth is so stiff that after it falls, it even begins to unroll.
+	</p>
 
+	<p>
+		Cloth falling with density = 1, 15, 50, respectively
+	</p>
+	<td>
+		<img src="images/p4_density1.png" align="middle" width="300" />
+	</td>
+	<td>
+		<img src="images/p4_density15.png" align="middle" width="300" />
+	</td>
+	<td>
+		<img src="images/p4_density50.png" align="middle" width="300" />
+	</td>
+	<p>
+		For lower densities, the folds in the cloth are looser and are bigger. For higher densities, the folds in the cloth are closer together and much finer.
+	</p>
 	<br><br>
 
 	<h2>Part 5</h2>
@@ -216,5 +340,5 @@
 	</p>
 
 	<p>https://cal-cs184-student.github.io/sp22-project-webpages-jumony/proj4/index.html</p>
-	</body>
+</body>
 </html>
