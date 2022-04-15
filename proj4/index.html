@@ -1,7 +1,220 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Project 4 here
+﻿<html>
+<head>
+	<style>
+		body {
+			padding: 100px;
+			width: 1000px;
+			margin: auto;
+			text-align: left;
+			font-weight: 300;
+			font-family: 'Open Sans', sans-serif;
+			color: #121212;
+		}
+
+		h1, h2, h3, h4 {
+			font-family: 'Source Sans Pro', sans-serif;
+		}
+	</style>
+	<title>CS 184 Rasterizer</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+<body>
+	<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2022</h1>
+	<h1 align="middle">Project 4: Cloth Sim</h1>
+	<h2 align="middle">Julia Deng, Harmony He</h2>
+	Project 4 here
+
+	<h2>Overview</h2>
+	<p>
+		*insert overview here*
+	</p>
+
+	<br><br>
+
+	<h2>Part 1</h2>
+	<h3>Masses and Springs</h3>
+	<p>
+		Description of part
+	</p>
+	<p>
+		Images of scene pinned2.json
+	</p>
+	<div align="middle">
+		<table style="width=100%" , cellspacing="0">
+			<tr>
+				<td>
+					<img src="images/CBspheres_0.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/CBspheres_1.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/CBspheres_2.png" align="middle" width="300" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+		(1) Wireframe without any shearing constraints, (2) Without any shearing constraints, (3) Without all constraints
+	</p>
+	<br><br>
+
+	<h2>Part 2</h2>
+	<h3>Simulation via Numerical Integration</h3>
+	<p>
+		Description of part
+	<p>
+		Describe the effects of changing the spring constant ks; how does the cloth behave from start to rest with a very low ks? A high ks?
+		What about for density?
+		What about for damping?
+		For each of the above, observe any noticeable differences in the cloth compared to the default parameters and show us some screenshots of those interesting differences and describe when they occur.
+	</p>
+	<div align="middle">
+		<table style="width=100%">
+			<tr>
+				<td>
+					<img src="images/CBdragon_microfacet0_005.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/CBdragon_microfacet0_05.png" align="middle" width="300" />
+				</td>
+			</tr>
+			<br>
+			<tr>
+				<td>
+					<img src="images/CBdragon_microfacet0_25.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/CBdragon_microfacet0_5.png" align="middle" width="300" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+		Scene pinned4.json in final resting state
+	</p>
+	<div align="middle">
+		<img src="images/CBbunny_microfacet_cu_cos.png" width="300">
+		<img src="images/CBbunny_microfacet_cu_importance.png" width="300">
+	</div>
+
+	<br><br>
+
+	<h2>Part 3</h2>
+	<h3>Handling collisions with other objects</h3>
+	<p>
+		Description of part
+	<p>
+		Shaded cloth from scene/sphere.json in its final resting state on the sphere, with ks = 500, ks = 5000, and ks = 50000, respectively.
+	</p>
+	<div align="middle">
+		<table style="width=100%">
+			<tr>
+				<td>
+					<img src="images/CBdragon_microfacet0_005.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/CBdragon_microfacet0_05.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/CBdragon_microfacet0_25.png" align="middle" width="300" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+		Shaded cloth from scene/sphere.json lying peacefully at rest on the plane
+	</p>
+	<div align="middle">
+		<img src="images/CBbunny_microfacet_cu_cos.png" width="300">
+	</div>
+
+	<br><br>
+
+	<h2>Part 4</h2>
+	<h3>Handling self-collisions</h3>
+	<p>
+		Description of part
+	<p>
+		at least 3 screenshots that document how your cloth falls and folds on itself, starting with an early, initial self-collision and ending with the cloth at a more restful state (even if it is still slightly bouncy on the ground).
+	</p>
+	<div align="middle">
+		<table style="width=100%">
+			<tr>
+				<td>
+					<img src="images/CBdragon_microfacet0_005.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/CBdragon_microfacet0_05.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/CBdragon_microfacet0_25.png" align="middle" width="300" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+		Vary the density as well as ks and describe with words and screenshots how they affect the behavior of the cloth as it falls on itself.e
+	</p>
+	<p>
+		images description
+	</p>
+	<div align="middle">
+		<table style="width=100%">
+			<tr>
+				<td>
+					<img src="images/CBdragon_microfacet0_005.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/CBdragon_microfacet0_05.png" align="middle" width="300" />
+				</td>
+				<td>
+					<img src="images/CBdragon_microfacet0_25.png" align="middle" width="300" />
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<br><br>
+
+	<h2>Part 5</h2>
+	<h3>Shaders</h3>
+	<p>
+		Description of part
+	<p>
+		Explain in your own words what is a shader program and how vertex and fragment shaders work together to create lighting and material effects.
+	</p>
+	<p>
+		Explain the Blinn-Phong shading model in your own words. Show a screenshot of your Blinn-Phong shader outputting only the ambient component, a screen shot only outputting the diffuse component, a screen shot only outputting the specular component, and one using the entire Blinn-Phong model.
+	</p>
+	<p>
+		Show a screenshot of your texture mapping shader using your own custom texture by modifying the textures in /textures/.
+	</p>
+	<div align="middle">
+		<img src="images/CBbunny_microfacet_cu_cos.png" width="300">
+	</div>
+	<p>
+		Show a screenshot of bump mapping on the cloth and on the sphere. Show a screenshot of displacement mapping on the sphere. Use the same texture for both renders. You can either provide your own texture or use one of the ones in the textures directory, BUT choose one that's not the default texture_2.png. Compare the two approaches and resulting renders in your own words. Compare how your the two shaders react to the sphere by changing the sphere mesh's coarseness by using -o 16 -a 16 and then -o 128 -a 128.
+	</p>
+	<div align="middle">
+		<img src="images/CBbunny_microfacet_cu_cos.png" width="300">
+	</div>
+	<p>
+		Show a screenshot of your mirror shader on the cloth and on the sphere.
+	</p>
+	<div align="middle">
+		<img src="images/CBbunny_microfacet_cu_cos.png" width="300">
+	</div>
+	<p>
+		Explain what you did in your custom shader, if you made one.
+	</p>
+
+	<h2>Collaboration</h2>
+	<p>
+		As partners, we each focused more on one task but helped each other. We attended project parties and communicated about what questions we would ask the TAs. We also collaborated by using CLion's Code With Me feature to pair program.
+	</p>
+
+	<p>https://cal-cs184-student.github.io/sp22-project-webpages-jumony/proj4/index.html</p>
 	</body>
 </html>
