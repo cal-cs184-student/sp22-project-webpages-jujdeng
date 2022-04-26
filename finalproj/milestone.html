@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<style>
+		  body {
+			padding: 100px;
+			width: 1000px;
+			margin: auto;
+			text-align: left;
+			font-weight: 300;
+			font-family: 'Open Sans', sans-serif;
+			color: #121212;
+		  }
+		  h1, h2, h3, h4 {
+			font-family: 'Source Sans Pro', sans-serif;
+		  }
+		</style>
+		<title>CS 184 Final Project Milestone</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+	</head>
+	<body>
+		<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2022</h1>
+		<h1 align="middle">Final Project: Non-Photorealistic Rendering</h1>
+		<h2 align="middle">Julia Deng, Harmony He, Jessica Liang, Christina Shao</h2>
+
+		<h2>Summary</h2>
+		<p>
+			So far we've accomplished taking in an image and outputting a posterized version of it. 
+            Using Python's Pillow library, we experimented with different kinds of image processing.
+            We take in an image, get the RGB values of each pixel, and find the most similar color based on the RGB color value distances.
+            Our process so far is finding the six most common colors by repeatedly averaging all the pixels and removing the colors that are within a distance to this average color. This effectively leaves our image with just 6 colors.
+        </p>
+        <p>
+			We also tried keeping colors based on closest brightness values, but sometimes the main part of the image and the background brightnesses were too similar.
+        </p>
+        <p>
+			Another issue we ran into was when an image already had similar colors, the output looked like just 2 colors instead of 6 because the pixel values were mostly all closest to those 2 specific colors.
+        </p>
+        <p>
+			We addressed these issues with clamping and using RGB distance values rather than brightness. 
+            For clamping, we wanted the color values to round down to a multiple of a certain number. 
+            Thus, similar colors would get clamped down to have the same value. 
+            We counted how many pixels each clamped value had and got the top few to get the bounds of our colors. 
+            Then, based on the bounds, we assigned pixels of similar colors within certain bounds to have a certain color. 
+        </p>
+        <p>
+            Our results so far are good! We are able to output images with a cool artistic effect with simplified color palettes.
+        </p>
+		<br><br>
+
+		<h2>Reflection</h2>
+        <p>
+            When we planned this project, we were unsure of whether we'd take in inputs of 3D .dae files or 2D .jpg/.png images.
+            In our work so far, we've only looked at 2D images and have made significant progress on our posterization effect.
+        </p>
+        <p>
+            Our progress is according to plan, but we do want to try extending our work to 3D. We're not quite sure what this will look like.
+        </p>
+		<br><br>
+
+        <h3>Updated work plan:</h3>
+        <h3>Rest of Week 3</h3>
+		<ul>
+            <li>2D edge smoothing</li>
+            <li>research edge detection for the pencil sketch effect</li>
+            <li>research extending our work to 3D space with shaders</li>
+        </ul>
+        <h3>Week 4</h3>
+		<ul>
+            <li>implement the pencil sketch effect</li>
+            <li>extend work to 3D space with shaders</li>
+            <li>final deliverables</li>
+        </ul>
+		<br><br>
+
+        <a href="https://docs.google.com/presentation/d/1kF6dFFpqcXheLO6pMLUEfxHTyiE4b5ZlqwDN2Zy8A-s/edit?usp=sharing">summary and progress slides</a>
+            
+		<br><br>
+	</body>
+</html>
