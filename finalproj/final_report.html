@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<style>
+		  body {
+			padding: 100px;
+			width: 1000px;
+			margin: auto;
+			text-align: left;
+			font-weight: 300;
+			font-family: 'Open Sans', sans-serif;
+			color: #121212;
+		  }
+		  h1, h2, h3, h4 {
+			font-family: 'Source Sans Pro', sans-serif;
+		  }
+		</style>
+		<title>CS 184 Final Project Milestone</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+	</head>
+	<body>
+		<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2022</h1>
+		<h1 align="middle">Final Project: Non-Photorealistic Rendering</h1>
+		<h2 align="middle">Julia Deng, Harmony He, Jessica Liang, Christina Shao</h2>
+
+		<h2>Abstract</h2>
+		<p>
+			In our final project, we focused on 2D NPR, non-photorealistic rendering. 
+            We wanted to work with NPR to explore the artistic side of graphics and render images in abstract ways that are still recognizable. 
+            We implemented posterization, pencil sketch, and watercolor effects on images. 
+            We started our project from scratch and used Pillow, Python’s photo imaging library. 
+            We used OpenCV as inspiration for methods and features we could implement ourselves and enjoyed learning about different blurring and filtering techniques.
+        </p>
+		<br><br>
+
+		<h2>Technical approach</h2>
+        <h3>Posterization</h3>
+        <p>
+            To implement posterization, we needed to develop a scheme to select an appropriate color palette given the RGB values of each pixel on the image. 
+            We experimented with different schemes, such as having a pre-set color palette, averaging RGB values, or creating color ‘bins’. 
+            Some problems we encountered included issues with images containing fewer prominent colors, which would output an image with very few colors. 
+            We solved this by reworking our algorithm to choose more colors. 
+            To find a representative color palette, we ended up iterating through each color and adding it to our palette as long as it is differentiable from the rest of the color palette. 
+            We define being ‘differentiable’ based on the euclidean distance of a color’s RGB values. 
+            Then, we map each pixel’s color to a color in our reduced palette based on euclidean distance. 
+            We learned that there are many different ways to get similar outputs, so we spent time experimenting to see what output we liked the best. 
+        </p>
+		<br><br>
+        <h3>Pencil sketch</h3>
+        <p>
+            In our pencil sketch algorithm, we first convert the image to grayscale. 
+            Then we invert the image to find and emphasize the edges. 
+            Then, we apply a gaussian blur in order to smooth out and reduce the complexity of the image. 
+            Lastly, we invert it back and obtain the final effect by dividing the grayscale image by the inverted blurred image. 
+            We were surprised by how seemingly simple this effect was using library functions. 
+            To make the effect unique, we decided to implement our own function for the gaussian blur, which a bulk of our efforts for developing this effect went into. 
+            We used the following gaussian function to calculate a weight matrix, which is used to calculate the value of the gaussian blur. 
+            We ran into issues where the output was unexpectedly noisy but fixed this by debugging our blur function and the way we divided the images at the end.
+        </p>
+        <div align="middle">
+			<img src="images/gaussian.png" width="200">
+		</div>
+        <br><br>
+        <h3>Watercolor</h3>
+        <p>
+            
+        </p>
+        <div align="middle">
+			<img src="images/bilateral.png" width="200">
+		</div>
+		<br><br>
+
+        <h2>Results</h2>
+        <div align="middle">
+			<img src="images/posterization.png" width="800">
+		</div>
+        <br><br>
+        <div align="middle">
+			<img src="images/pencil.png" width="800">
+		</div>
+        <br><br>
+        <div align="middle">
+			<img src="images/watercolor.png" width="800">
+		</div>
+		<br><br>
+
+        <h2>References</h2>
+        <ul>
+            <a href="https://towardsdatascience.com/generate-pencil-sketch-from-photo-in-python-7c56802d8acb"><li>Pencil sketch tutorial</li></a>
+            <a href="https://en.wikipedia.org/wiki/Gaussian_blur"><li>Gaussian blur</li></a>
+            <a href="https://medium.com/1-hour-blog-series/convert-a-photo-to-different-types-of-sketches-using-python-26f005a75f66"><li>OpenCV inspiration</li></a>
+            <a href="https://yunfei.work/watercolor/watercolor_pp.pdf"><li>Research on techniques for the watercolor effect</li></a>
+            <a href="https://www.analyticsvidhya.com/blog/2022/04/using-computer-vision-to-convert-images-in-watercolor-art/"><li>Watercolor methods</li></a>
+        </ul>
+        <br><br>
+
+        <h2>Contributions</h2>
+        <ul>
+            <li>Christina</li>
+            <li>Harmony</li>
+            <li>Jessica</li>
+            <li>Julia</li>
+        </ul>
+        <br><br>
+
+		<a href="">video</a>    
+		<br><br>
+	</body>
+</html>
