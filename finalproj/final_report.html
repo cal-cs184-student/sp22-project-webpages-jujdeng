@@ -63,10 +63,20 @@
         <br><br>
         <h3>Watercolor</h3>
         <p>
-            
+            The OpenCV library actually has built-in functions to implement the watercolor effect, but we challenged ourselves to implement the algorithm entirely from scratch.
+            The first two steps in the algorithm we implemented were median blur and bilateral image filtering.
+            Median blur removes and clears impurities by taking the median of the surrounding pixels.
+            The next step was bilateral image filtering, which smooths out the image and reduces noise, while still preserving edges. 
+            This filter is similar to Gaussian Blurring, but we add a term that accounts for the color difference between two points for edge preservation, as seen in the equations below. 
+            We sharpened the image to obtain our final result.
+            Our initial implementation of the sharpening step of the process would cause portions of the image to result in a clearly incorrect color. 
+            We suspected that this was due to certain pixel values underflowing or overflowing the 0 to 255 interval. 
+            When we casted the values to 8-bit integers, the numbers would “wrap around” to the other end of the interval. 
+            We fixed this by directly setting the minimum to 0 and maximum to 255 before casting.
         </p>
         <div align="middle">
-			<img src="images/bilateral.png" width="200">
+            <img src="images/gauss.png" width="200">
+			<img src="images/bilateral.png" width="300">
 		</div>
 		<br><br>
 
@@ -91,19 +101,43 @@
             <a href="https://medium.com/1-hour-blog-series/convert-a-photo-to-different-types-of-sketches-using-python-26f005a75f66"><li>OpenCV inspiration</li></a>
             <a href="https://yunfei.work/watercolor/watercolor_pp.pdf"><li>Research on techniques for the watercolor effect</li></a>
             <a href="https://www.analyticsvidhya.com/blog/2022/04/using-computer-vision-to-convert-images-in-watercolor-art/"><li>Watercolor methods</li></a>
+            <a href="https://cs.brown.edu/courses/csci1290/labs/lab_bilateral/index.html"><li>Bilateral filter</li></a>
         </ul>
         <br><br>
 
         <h2>Contributions</h2>
+        <p>
+            All team members worked together and contributed in brainstorming, researching, and building the project. 
+            We spent a majority of our time meeting up in person so that every member could contribute to research and the decision making process throughout each portion of the project. 
+            Specific individual contributions are as follows: 
+        </p>
         <ul>
             <li>Christina</li>
+                <ul>
+                    <li>color selection and output generation code for posterization</li>
+                    <li>gaussian blur code for pencil sketch</li>
+                    <li>median blur and bilateral filtering, debugging sharpening code for watercolor</li>
+                </ul>
             <li>Harmony</li>
+                <ul>
+                    <li>Tested out bounding colors for posterization</li>
+                    <li>Also worked on gaussian blur code for pencil sketch</li>
+                    <li>Sharpening code(gaussian blur for RGB, addWeighted function) for watercolor</li>
+                </ul>
             <li>Jessica</li>
+                <ul>
+                    <li>color selection & debugging  for posterization</li>
+                    <li>creating slides for presentation and video</li>
+                </ul>
             <li>Julia</li>
+                <ul>
+                    <li>found the setup with pillow and opencv library functions to use as desired output</li>
+                    <li>created docs and websites</li>
+                </ul>
         </ul>
         <br><br>
 
-		<a href="">video</a>    
+		<a href="https://drive.google.com/file/d/1TSwQ2xYFaD2hwkqaXy9RjbtBYplQ7_Bd/view?usp=sharing" target="_blank">video</a>    
 		<br><br>
 	</body>
 </html>
